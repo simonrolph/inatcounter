@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+    <title>iNaturalist Counter</title>
+    <link rel="shortcut icon" type="image/png" href="https://www.inaturalist.org/favicon.ico"/>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+   crossorigin=""/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+
+    
+    <style>
+        body {
+            background-color: #ffffff;
+            text-align: center;
+            font-family: 'Noto Sans', sans-serif;
+        }
+        
+        .custom .leaflet-popup-tip,
+        .custom .leaflet-popup-content-wrapper {
+            background: #e93434;
+            color: #ffffff;
+        }
+	
+        
+        h1 {
+            color: #74ac00;
+            font-size: 102px;
+            margin-bottom: -25px;
+            margin-top: -25px;
+        }
+        
+
+        html, body, #map {
+          height:100%;
+          width:100%;
+          padding:0px;
+          margin:0px;
+        }
+        
+        #map {
+            z-index: 1;
+        }
+        
+        .box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            /* bring your own prefixes */
+                        z-index: 10;
+            background-color: rgba(255, 255, 255, 0.57);
+            padding-left: 25px;
+            padding-right:25px;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            
+
+           
+        }
+        
+        a:hover {
+ cursor:pointer;
+}
+        
+        .leaflet-popup-content-wrapper {
+            background-color: rgba(255, 255, 255, 0.57);
+            text-align: center;
+            -webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+            padding: 5px;
+}
+
+.leaflet-popup-content-wrapper .leaflet-popup-content {
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.leaflet-popup-tip-container {
+    background-color: rgba(255, 255, 255, 0);
+}
+        
+        .leaflet-popup-tip {
+            background-color: rgba(255, 255, 255, 0);
+            -webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+        }
+
+        
+        
+        .button {
+            background-color: #74ac00;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 25px;
+            pointer-events:all;
+        }
+        
+        .footer {
+            bottom: 0%;
+            left:50%;
+            position: fixed;
+            transform: translate(-50%, 0%);
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body>
+    <div id = "map"></div>
+
+
+    <div class="box" id="thingy">
+        <p>There are currently</p>
+        <h1 id="counter"></h1>
+        <p>verifiable observations on iNaturalist</p>
+        <p><a href="https://www.inaturalist.org/observations" target="_blank" class="button">Explore observations</a></p>
+        
+    </div>
+    <div class="footer">
+        
+        <p ><a class="toggler">Click here to show/hide the counter</a> - 
+        Made by <a href="https://twitter.com/simon_rolph" target="_blank">Simon</a> (a work in progress)</p>
+    </div>
+    
+
+    
+
+
+    
+    <script src="countUp.js"></script>
+     <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+   integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+   crossorigin=""></script>
+    <script src="jquery-3.3.1.min.js"></script>
+       <script>
+$(document).ready(function(){
+    $(".toggler").click(function(){
+        $(".box").toggle();
+    });
+});
+</script>
+    
+    <script>
+
+
+        var mymap = L.map('map').setView([0, -0.09], 1.5 );
+        L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}{r}.{ext}', {
+	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	subdomains: 'abcd',
+	minZoom: 0,
+	maxZoom: 18,
+	ext: 'png'
+}).addTo(mymap);
+        
+        var V = new L.DivIcon({ className: 'my-div-icon' , html: '<i class="fas fa-map-marker-alt"></i>' });
+        
+        // This function adds a zero so that numbers are are always to 2 digets
+        function addZero(i) {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
+        }
+        
+        function getTheDate(secondsdiff){
+            var d = Math.floor((new Date()).getTime() / 1000) + secondsdiff 
+            //console.log(d);
+            var da = new Date(0); // The 0 there is the key, which sets the date to the epoch
+            da.setUTCSeconds(d);
+
+            
+
+            // make the date in the right format for the API call
+            
+            // example correct format: 2018-10-14T12%3A44%3A24%2B00%3A00
+            var outDate = String(addZero(da.getUTCFullYear())) + "-" + String(addZero(da.getUTCMonth()+1)) + "-" + String(addZero(da.getUTCDate())) + "T" +String(addZero(da.getUTCHours())) +"%3A" + String(addZero(da.getUTCMinutes())) +"%3A" +String(addZero(da.getUTCSeconds())) +  "%2B00%3A00";
+            
+            
+            return(outDate)
+        }
+        
+        // options for the counter
+        var options = {
+            useEasing: true
+            , useGrouping: true
+            , separator: ','
+            , decimal: '.'
+        , };
+        
+        // INITIAL COUNTER NUMBER
+        // Create a request variable and assign a new XMLHttpRequest object to it.
+        var request = new XMLHttpRequest();
+        var theDate = getTheDate(0)
+        request.open('GET', 'https://api.inaturalist.org/v1/observations?verifiable=true&created_d2='+theDate+'&page=1&per_page=0&order=desc&order_by=created_at', true);
+        request.onload = function () {
+                // Begin accessing JSON data here
+                var data = JSON.parse(this.response);
+                if (request.status >= 200 && request.status < 400) {
+                    numAnim = new CountUp("counter", data["total_results"] - 2, data["total_results"], 0, 5);
+                    if (!numAnim.error) {
+                        numAnim.start();
+                    }
+                    else {
+                        console.error(numAnim.error);
+                    }
+                }
+                else {
+                    console.log('error');
+                }
+            }
+            // Send request
+        request.send();
+        //
+        // updater
+
+        window.setInterval(function () {
+            // Create a request variable and assign a new XMLHttpRequest object to it.
+            var request = new XMLHttpRequest();
+            // Open a new connection, using the GET request on the URL endpoint
+            var theDate = getTheDate(0)
+            request.open('GET', 'https://api.inaturalist.org/v1/observations?verifiable=true&created_d2='+theDate+'&page=1&per_page=0&order=desc&order_by=created_at', true);
+            request.onload = function () {
+                    // Begin accessing JSON data here
+                    var data = JSON.parse(this.response);
+                    if (request.status >= 200 && request.status < 400) {
+                        //console.log(data["total_results"]);
+                        numAnim.update(data["total_results"]);
+                    }
+                    else {
+                        console.log('error');
+                    }
+                }
+            // Send request
+            request.send();
+            
+            // Same again for observations SINCE date (minus 15 seconds) (for adding markers)
+            var theDate2 = getTheDate(-15);
+            var request2 = new XMLHttpRequest();
+            request2.open('GET', 'https://api.inaturalist.org/v1/observations?verifiable=true&created_d1='+theDate2+'&page=1&per_page=30&order=desc&order_by=created_at', true);
+            request2.onload = function () {
+                    // Begin accessing JSON data here
+                    var data2 = JSON.parse(this.response);
+                    if (request2.status >= 200 && request2.status < 400) {
+                        //console.log(data2["total_results"]);
+
+                        // lopp through results of recently added observations
+                        for (i = 0; i < data2["total_results"]; i++) {
+                            var coords = data2["results"][i]["location"].split(",");
+                            var marker = L.marker([coords[0], coords[1]],{icon: V})
+                            marker.url = 'https://www.inaturalist.org/observations/' + data2["results"][i]["id"]
+
+                            // ad a click event to open the observation page in a new tab
+                            marker.on('click', function(){
+                                window.open(this.url,'_blank');
+                            });
+                            
+
+                            // get the guess name from the API
+                            // should really do another API call to get the actual ID because it gets null quite often
+                            var guess = data2["results"][i]["species_guess"];
+                            if (guess == null) {
+                                var guess = "Unknown";
+                            }
+                            var guess = guess.charAt(0).toUpperCase() + guess.substr(1);
+                            
+                            //add all the info to the popup
+                            marker.bindPopup("<img src='"+ data2["results"][i]["photos"][0]["url"] +"'> <br>"  + guess+"<br> Observed by "+data2["results"][i]["user"]["login"] + "<br>on " + data2["results"][i]["observed_on"]);
+                            
+                            //make it so the marker appears on mouse rollover and dissapears when roll off
+                            marker.on('mouseover', function (e) {
+                                this.openPopup();
+                            });
+                            marker.on('mouseout', function (e) {
+                                this.closePopup();
+                            });
+                        
+                            // add the marker
+                            marker.addTo(mymap)
+                            
+                            // sometimes it add the same marker twice so could use the uuid to make sure it doesn't
+                            //data2["results"][i]["uuid"];
+                        }
+                        
+                    }
+                    else {
+                        console.log('error');
+                    }
+                }
+
+            request2.send();
+            
+            
+        }, 10000);
+        
+        
+        
+        
+    </script>
+</body>
+
+</html>
+
+

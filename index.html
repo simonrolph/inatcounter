@@ -13,124 +13,171 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 
     
-    <style>
-        body {
-            background-color: #ffffff;
-            text-align: center;
-            font-family: 'Noto Sans', sans-serif;
-        }
-        
-        .custom .leaflet-popup-tip,
-        .custom .leaflet-popup-content-wrapper {
-            background: #e93434;
-            color: #ffffff;
-        }
-	
-        
-        h1 {
-            color: #74ac00;
-            font-size: 102px;
-            margin-bottom: -25px;
-            margin-top: -25px;
-        }
-        
+<style>
+    body {
+        background-color: #ffffff;
+        text-align: center;
+        font-family: 'Noto Sans', sans-serif;
+    }
 
-        html, body, #map {
-          height:100%;
-          width:100%;
-          padding:0px;
-          margin:0px;
-        }
-        
-        #map {
-            z-index: 1;
-        }
-        
-        .box {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            /* bring your own prefixes */
-                        z-index: 10;
-            background-color: rgba(255, 255, 255, 0.57);
-            padding-left: 25px;
-            padding-right:25px;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            
+    .custom .leaflet-popup-tip,
+    .custom .leaflet-popup-content-wrapper {
+        background: #e93434;
+        color: #ffffff;
+    }
 
-           
-        }
-        
-        a:hover {
- cursor:pointer;
+
+    h1 {
+        color: #74ac00;
+        font-size: 102px;
+        margin-bottom: -25px;
+        margin-top: -25px;
+    }
+
+
+    html,
+    body,
+    #map {
+        height: 100%;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    #map {
+        z-index: 1;
+    }
+
+    .box {
+
+        /* bring your own prefixes */
+        z-index: 10;
+        background-color: rgba(255, 255, 255, 0.57);
+        padding: 10px;
+        pointer-events: none;
+
+
+
+    }
+
+    a:hover {
+        cursor: pointer;
+    }
+
+    .leaflet-popup-content-wrapper {
+        background-color: rgba(255, 255, 255, 0.57);
+        text-align: center;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        padding: 5px;
+    }
+
+    .leaflet-popup-content-wrapper .leaflet-popup-content {
+        background-color: rgba(255, 255, 255, 0);
+    }
+
+    .leaflet-popup-tip-container {
+        background-color: rgba(255, 255, 255, 0);
+    }
+
+    .leaflet-popup-tip {
+        background-color: rgba(255, 255, 255, 0);
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+    }
+
+
+
+    .button {
+        background-color: #74ac00;
+        border: none;
+        color: white;
+        padding: 10px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 25px;
+        pointer-events: all;
+    }
+
+    .footer {
+        bottom: 0%;
+        left: 50%;
+        position: fixed;
+        transform: translate(-50%, 0%);
+        z-index: 10;
+    }
+    
+    .leaflet-marker-icon,
+.leaflet-marker-shadow {
+  -webkit-animation: fadein 3s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 3s; /* Firefox < 16 */
+  -ms-animation: fadein 3s; /* Internet Explorer */
+  -o-animation: fadein 3s; /* Opera < 12.1 */
+  animation: fadein 3s;
 }
-        
-        .leaflet-popup-content-wrapper {
-            background-color: rgba(255, 255, 255, 0.57);
-            text-align: center;
-            -webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
-            padding: 5px;
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
-.leaflet-popup-content-wrapper .leaflet-popup-content {
-    background-color: rgba(255, 255, 255, 0);
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
-.leaflet-popup-tip-container {
-    background-color: rgba(255, 255, 255, 0);
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
-        
-        .leaflet-popup-tip {
-            background-color: rgba(255, 255, 255, 0);
-            -webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
-        }
 
-        
-        
-        .button {
-            background-color: #74ac00;
-            border: none;
-            color: white;
-            padding: 10px 15px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 25px;
-            pointer-events:all;
-        }
-        
-        .footer {
-            bottom: 0%;
-            left:50%;
-            position: fixed;
-            transform: translate(-50%, 0%);
-            z-index: 10;
-        }
-    </style>
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+</style>
 </head>
 
 <body>
     <div id = "map"></div>
 
 
-    <div class="box" id="thingy">
+    
+    <div class="footer">
+        <div class="box" id="thingy">
+<a class="toggler" style="pointer-events: all;"><i  class="fas fa-times fa-2x" style="float: right; opacity: 0.2;"></i></a>
+        
+
         <p>There are currently</p>
         <h1 id="counter"></h1>
         <p>verifiable observations on iNaturalist</p>
         <p><a href="https://www.inaturalist.org/observations" target="_blank" class="button">Explore observations</a></p>
         
     </div>
-    <div class="footer">
-        
-        <p ><a class="toggler">Click here to show/hide the counter</a> - 
-        Made by <a href="https://twitter.com/simon_rolph" target="_blank">Simon</a> (a work in progress)</p>
+        <p>
+            Observations:<span class="fa-stack"><i class="fas fa-circle fa-stack-2x fa-inverse"></i><i class="fas fa-camera fa-stack-1x"></i></span> 
+            
+            Identifications:<span class="fa-stack"><i class="fas fa-circle fa-stack-2x fa-inverse"></i><i class="fas fa-trophy fa-stack"  style="color:#74ac00"></i></span>
+            <span class="fa-stack"><i class="fas fa-circle fa-stack-2x fa-inverse"></i><i class="fas fa-running fa-stack"  style="color:#74ac00"></i></span>
+            <span class="fa-stack"><i class="fas fa-circle fa-stack-2x fa-inverse"></i><i class="fas fa-check fa-stack"  style="color:#74ac00"></i>
+            </span>
+        </p>
+        <p><a class="toggler">Show/hide the counter</a> - Map clears every 5 mins - 
+        Made by <a href="https://twitter.com/simon_rolph" target="_blank">Simon</a></p>
     </div>
     
 
@@ -142,6 +189,7 @@
      <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
    integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
    crossorigin=""></script>
+    
     <script src="jquery-3.3.1.min.js"></script>
        <script>
 $(document).ready(function(){
@@ -158,12 +206,22 @@ $(document).ready(function(){
         L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}{r}.{ext}', {
 	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 	subdomains: 'abcd',
-	minZoom: 0,
-	maxZoom: 18,
+	minZoom: 2,
+	maxZoom: 10,
 	ext: 'png'
 }).addTo(mymap);
         
-        var V = new L.DivIcon({ className: 'my-div-icon' , html: '<i class="fas fa-map-marker-alt"></i>' });
+        var layerInds = L.layerGroup().addTo(mymap);
+        var layerObvs = L.layerGroup().addTo(mymap);
+        
+        var obs = new L.DivIcon({ className: 'my-div-icon' , html: '<span class="fa-stack"><i class="fas fa-circle fa-stack-2x fa-inverse"></i><i class="fas fa-camera fa-stack-1x"></i></span>' });
+        var ind = new L.DivIcon({ className: 'my-div-icon' , html: '<span class="fa-stack"><i class="fas fa-circle fa-stack-2x fa-inverse"></i><i class="fas fa-check fa-stack"  style="color:#74ac00"></i></span>' });
+        var ind2 = new L.DivIcon({ className: 'my-div-icon' , html: '<span class="fa-stack"><i class="fas fa-circle fa-stack-2x fa-inverse"></i><i class="fas fa-trophy fa-stack"  style="color:#74ac00"></i></span>' });
+        var ind3 = new L.DivIcon({ className: 'my-div-icon' , html: '<span class="fa-stack"><i class="fas fa-circle fa-stack-2x fa-inverse"></i><i class="fas fa-running fa-stack"  style="color:#74ac00"></i></span>' });
+        var ind4 = new L.DivIcon({ className: 'my-div-icon' , html: '<span class="fa-stack"><i class="fas fa-circle fa-stack-2x fa-inverse"></i><i class="fas fa-bolt fa-stack"  style="color:tomato"></i></span>' });
+        
+        
+        uuids = [];
         
         // This function adds a zero so that numbers are are always to 2 digets
         function addZero(i) {
@@ -208,6 +266,7 @@ $(document).ready(function(){
                 var data = JSON.parse(this.response);
                 if (request.status >= 200 && request.status < 400) {
                     numAnim = new CountUp("counter", data["total_results"] - 2, data["total_results"], 0, 5);
+                    var start_num = data["total_results"];
                     if (!numAnim.error) {
                         numAnim.start();
                     }
@@ -225,6 +284,7 @@ $(document).ready(function(){
         // updater
 
         window.setInterval(function () {
+            
             // Create a request variable and assign a new XMLHttpRequest object to it.
             var request = new XMLHttpRequest();
             // Open a new connection, using the GET request on the URL endpoint
@@ -245,51 +305,59 @@ $(document).ready(function(){
             request.send();
             
             // Same again for observations SINCE date (minus 15 seconds) (for adding markers)
-            var theDate2 = getTheDate(-15);
+            var theDate2 = getTheDate(-10);
             var request2 = new XMLHttpRequest();
-            request2.open('GET', 'https://api.inaturalist.org/v1/observations?verifiable=true&created_d1='+theDate2+'&page=1&per_page=30&order=desc&order_by=created_at', true);
+            request2.open('GET', 'https://api.inaturalist.org/v1/observations?verifiable=true&created_d1='+theDate2+'&page=1&per_page=40&order=desc&order_by=created_at', true);
+            
             request2.onload = function () {
                     // Begin accessing JSON data here
                     var data2 = JSON.parse(this.response);
+                
                     if (request2.status >= 200 && request2.status < 400) {
                         //console.log(data2["total_results"]);
 
                         // lopp through results of recently added observations
                         for (i = 0; i < data2["total_results"]; i++) {
                             var coords = data2["results"][i]["location"].split(",");
-                            var marker = L.marker([coords[0], coords[1]],{icon: V})
-                            marker.url = 'https://www.inaturalist.org/observations/' + data2["results"][i]["id"]
-
-                            // ad a click event to open the observation page in a new tab
-                            marker.on('click', function(){
-                                window.open(this.url,'_blank');
-                            });
+                            var uuid = data2["results"][i]["uuid"];
                             
+                            if (uuids.includes(uuid) == false){
+                            
+                                uuids.push(uuid);
+                                var marker = L.marker([coords[0], coords[1]],{icon: obs})
+                                marker.url = 'https://www.inaturalist.org/observations/' + data2["results"][i]["id"]
 
-                            // get the guess name from the API
-                            // should really do another API call to get the actual ID because it gets null quite often
-                            var guess = data2["results"][i]["species_guess"];
-                            if (guess == null) {
-                                var guess = "Unknown";
+                                // ad a click event to open the observation page in a new tab
+                                marker.on('click', function(){
+                                    window.open(this.url,'_blank');
+                                });
+
+
+                                // get the guess name from the API
+                                // should really do another API call to get the actual ID because it gets null quite often
+                                var guess = data2["results"][i]["species_guess"];
+                                if (guess == null) {
+                                    var guess = "Unknown";
+                                }
+                                var guess = guess.charAt(0).toUpperCase() + guess.substr(1);
+
+                                //add all the info to the popup
+                                marker.bindPopup("<img src='"+ data2["results"][i]["photos"][0]["url"] +"'> <br>"  + guess+"<br> Observed by "+data2["results"][i]["user"]["login"] + "<br>on " + data2["results"][i]["observed_on"],{ autoClose:true });
+
+                                //make it so the marker appears on mouse rollover and dissapears when roll off
+                                marker.on('mouseover', function (e) {
+                                    this.openPopup();
+                                });
+                                marker.on('mouseout', function (e) {
+                                    this.closePopup();
+                                });
+
+                                // add the marker
+                                marker.addTo(layerObvs);
+
+                                // sometimes it add the same marker twice so could use the uuid to make sure it doesn't
+                                //data2["results"][i]["uuid"];
                             }
-                            var guess = guess.charAt(0).toUpperCase() + guess.substr(1);
-                            
-                            //add all the info to the popup
-                            marker.bindPopup("<img src='"+ data2["results"][i]["photos"][0]["url"] +"'> <br>"  + guess+"<br> Observed by "+data2["results"][i]["user"]["login"] + "<br>on " + data2["results"][i]["observed_on"]);
-                            
-                            //make it so the marker appears on mouse rollover and dissapears when roll off
-                            marker.on('mouseover', function (e) {
-                                this.openPopup();
-                            });
-                            marker.on('mouseout', function (e) {
-                                this.closePopup();
-                            });
-                        
-                            // add the marker
-                            marker.addTo(mymap)
-                            
-                            // sometimes it add the same marker twice so could use the uuid to make sure it doesn't
-                            //data2["results"][i]["uuid"];
                         }
                         
                     }
@@ -297,11 +365,110 @@ $(document).ready(function(){
                         console.log('error');
                     }
                 }
+            
 
             request2.send();
             
+            // identifications
+            var request3 = new XMLHttpRequest();
+            request3.open('GET', 'https://api.inaturalist.org/v1/identifications?current=true&d1='+theDate2+'&order=desc&order_by=created_at', true);
             
-        }, 10000);
+            
+            request3.onload = function () {
+                    
+                    // Begin accessing JSON data here
+                    var data3 = JSON.parse(this.response);
+                    if (request2.status >= 200 && request2.status < 400) {
+                        //console.log(data3["total_results"]);
+                        //layerInds.clearLayers();      
+                        // lopp through results of recently added observations
+                        for (i = 0; i < data3["total_results"]; i++) {
+                            if (data3["results"][i]["observation"]["photos"][0] != null && data3["results"][i]["observation"]["location"] != null && data3["results"][i]["own_observation"] == false){
+                                //console.log(data3);
+                                var coords = data3["results"][i]["observation"]["location"].split(",");
+                                var uuid = data3["results"][i]["uuid"];
+                                if (uuids.includes(uuid)== false){
+
+                                    uuids.push(uuid);
+                                    
+                                    //console.log(data3["results"][i]["category"])
+
+
+                                    if (data3["results"][i]["category"] == "improving"){
+                                        var marker = L.marker([coords[0], coords[1]],{icon: ind2});
+                                    } else if (data3["results"][i]["category"] == "leading"){
+                                        var marker = L.marker([coords[0], coords[1]],{icon: ind3});
+                                    } else if (data3["results"][i]["category"] == "maverick"){
+                                        var marker = L.marker([coords[0], coords[1]],{icon: ind4});
+                                    } else {
+                                        var marker = L.marker([coords[0], coords[1]],{icon: ind});
+                                    }
+                                    marker.url = 'https://www.inaturalist.org/observations/' + data3["results"][i]["observation"]["id"]
+
+                                    // ad a click event to open the observation page in a new tab
+                                    marker.on('click', function(){
+                                        window.open(this.url,'_blank');
+                                    });
+
+                                    //console.log(data3["results"][i]["observation"]["photos"][0]["url"]);
+
+
+                                    // get the guess name from the API
+                                    // should really do another API call to get the actual ID because it gets null quite often
+                                    var guess = data3["results"][i]["taxon"]["name"];
+                                    if (guess == null) {
+                                        var guess = "Unknown";
+                                    }
+                                    var guess = guess.charAt(0).toUpperCase() + guess.substr(1);
+
+                                    //add all the info to the popup
+                                    marker.bindPopup("<img src='"+ data3["results"][i]["observation"]["photos"][0]["url"] +"'> <br>"  + guess+"<br> Identified by "+data3["results"][i]["user"]["login"],{ autoClose: true });
+
+                                    //make it so the marker appears on mouse rollover and dissapears when roll off
+                                    marker.on('mouseover', function (e) {
+                                        this.openPopup();
+                                    });
+                                    marker.on('mouseout', function (e) {
+                                        this.closePopup();
+                                    });
+                                    
+
+
+                                    // add the marker
+                                    marker.addTo(layerInds);
+                                    
+                                    //console.log(layerInds.getLayers());
+                                    
+                                    
+//                                    setTimeout(function() {
+//                                    }, 20000);
+                                    
+                                    
+                                    
+                                }
+                            }
+                            
+                        }
+                        
+                    }
+                    else {
+                        console.log('error');
+                    }
+                }
+            
+
+            request3.send();
+            
+            
+            
+            
+        }, 4000);
+        
+        window.setInterval(function(){
+           layerInds.clearLayers();
+            layerObvs.clearLayers();
+            uuids = [];
+        }, 300000);
         
         
         
