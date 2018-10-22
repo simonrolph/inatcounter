@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+
+
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
     <title>iNaturalist LIVE</title>
@@ -112,6 +114,17 @@
             position: fixed;
             transform: translate(-50%, 0%);
             z-index: 10;
+        }
+        
+        .topper {
+
+            left: 50%;
+            position: fixed;
+            transform: translate(-50%, 0%);
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.57);
+            padding: 10px;
+            text-align: left;
         }
 
         .leaflet-marker-icon,
@@ -236,7 +249,14 @@
 </head>
 
 <body>
+    
+    <div class="topper">
+        <a class="toggler2" style="pointer-events: all;"><i  class="fas fa-times" style="float: right; opacity: 0.2;"></i></a>
+    <p><b>Welcome to iNaturalist LIVE!</b></p><p> This webpage provides a live visualisation of whats happening on iNaturalist right now!
+        iNaturalist is a platform for sharing observations of wildlife and identifying these observations as different species. Watch as markers appear on the map either representing someone uploading their observations or providing an identification. Click on each marker to be taken to the iNaturalist website to learn more about that observation or identification.</p>
+        </div>
     <div id="map"></div>
+    
 
 
 
@@ -309,7 +329,6 @@
     <script src="countUp.js"></script>
     
     <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
-    <script src="fireworks.js"></script>
     
     
     <script src="jquery-3.3.1.min.js"></script>
@@ -317,6 +336,14 @@
         $(document).ready(function() {
             $(".toggler").click(function() {
                 $(".box").toggle();
+            });
+        });
+    </script>
+    
+    <script>
+        $(document).ready(function() {
+            $(".toggler2").click(function() {
+                $(".topper").toggle();
             });
         });
     </script>
