@@ -306,6 +306,12 @@
         a { color: inherit; 
         text-decoration: none;
         } 
+        
+        .profilepic {
+            height:20px;
+            border-radius: 50%;
+            vertical-align:middle;
+        }
     </style>
 </head>
 
@@ -539,7 +545,7 @@
                     //console.log(data["total_results"]);
                     numAnim.update(data["total_results"]);
                 } else {
-                    console.log('error');
+                    console.log(data);
                 }
             }
             // Send request
@@ -615,15 +621,24 @@
 
                             // add the marker
                             marker.addTo(layerObvs);
-                            //mymap.addLayer(marker);
-                            marker.openPopup();
+                            //var marker_id = layerObvs.getLayerId(marker);
+                            marker.marker_id = layerObvs.getLayerId(marker);
+                            //console.log(layerObvs.getLayerId(marker));
+                            layerObvs.getLayer(marker.marker_id).openPopup();
                             
+                                         
+                            // ticker stuff
                             var newtick = document.createElement("div");
                             newtick.classList.add("tick");
-                            newtick.innerHTML = "<a style='display:block;' href = '" +marker.url+"' target = '_blank'>" + data2["results"][i]["user"]["login"] + " observed <i>" + name +"</i>  "+common_name + "</a>" ;
+                            var iconurl = "<img class='profilepic' src='https://www.inaturalist.org/attachment_defaults/users/icons/defaults/thumb.png'>";
+                            if (data2["results"][i]["user"]["icon"] != null){
+                                var iconurl = "<img class='profilepic' src='" + data2["results"][i]["user"]["icon"]+"'> " ;
+                            };
+                            newtick.innerHTML = "<a style='display:block;' href = '" +marker.url+"' target = '_blank'> " + iconurl + data2["results"][i]["user"]["login"] + " observed <i>" + name +"</i>  "+common_name + "</a>" ;;
                             newtick.href = marker.url;
                             newtick.setAttribute('target', '_blank');
-                            
+                            newtick.setAttribute('onmouseenter', "layerObvs.getLayer("+marker.marker_id+").openPopup();");
+
                             ticker = document.getElementById("ticker");
                             ticker.insertBefore(newtick, ticker.firstChild);
 
@@ -633,7 +648,7 @@
                     }
 
                 } else {
-                    console.log('error');
+                    console.log(data2);
                 }
             }
 
@@ -734,7 +749,7 @@
                     }
 
                 } else {
-                    console.log('error');
+                    console.log(data3);
                 }
             }
 
@@ -750,6 +765,8 @@
         window.setInterval(function() {
             layerInds.clearLayers();
             layerObvs.clearLayers();
+            var myNode = document.getElementById("ticker");
+            myNode.innerHTML = '';
             uuids = [];
         }, 300000);
     </script>
