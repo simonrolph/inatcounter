@@ -350,7 +350,7 @@
                             window.setTimeout(function(markerid) {
                                 //console.log(markerid);
                                 document.getElementById("marker"+markerid).remove();
-                                mymap.removeLayer(layerIObvs.getLayer(markerid));
+                                mymap.removeLayer(layerObvs.getLayer(markerid));
 
                             },300000,marker.marker_id);
                         }
@@ -477,7 +477,7 @@
 
                                 // remove the marker + ticker after a set time preiod
                                 window.setTimeout(function(markerid) {
-                                    console.log(markerid);
+                                    //console.log(markerid);
                                     document.getElementById("marker"+markerid).remove();
                                     mymap.removeLayer(layerInds.getLayer(markerid));
 
