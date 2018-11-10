@@ -300,6 +300,11 @@
                                 }
                             } 
                             
+                            var iconurl = "<img class='profilepic' src='https://www.inaturalist.org/attachment_defaults/users/icons/defaults/thumb.png'>";
+                            if (data2["results"][i]["user"]["icon"] != null){
+                                var iconurl = "<img class='profilepic' src='" + data2["results"][i]["user"]["icon"]+"'> " ;
+                            };
+                            
                             
                             
                                                         
@@ -307,7 +312,7 @@
   
 
                             //add all the info to the popup
-                            marker.bindPopup("<a target='_blank' href='"+marker.url+"'><img  src='" + data2["results"][i]["photos"][0]["url"] + "'></a> <br><i>" + name + "</i><br> Observed by " + data2["results"][i]["user"]["login"] + "<br>on " + data2["results"][i]["observed_on"], {
+                            marker.bindPopup("<a target='_blank' href='"+marker.url+"'><img  src='" + data2["results"][i]["photos"][0]["url"] + "'></a> <br><i>" + name + "</i><br> Observed by " + iconurl + data2["results"][i]["user"]["login"] + "<br>on " + data2["results"][i]["observed_on"], {
                                 autoClose: true,
                                 autoPan: false
                             });
@@ -332,10 +337,7 @@
                             var newtick = document.createElement("div");
                             newtick.classList.add("tick");
                             newtick.classList.add("observationtick");
-                            var iconurl = "<img class='profilepic' src='https://www.inaturalist.org/attachment_defaults/users/icons/defaults/thumb.png'>";
-                            if (data2["results"][i]["user"]["icon"] != null){
-                                var iconurl = "<img class='profilepic' src='" + data2["results"][i]["user"]["icon"]+"'> " ;
-                            };
+                            
                             newtick.innerHTML = "<a style='display:block;' href = '" +marker.url+"' target = '_blank'> " + iconurl + data2["results"][i]["user"]["login"] + " observed <i class='fas fa-camera'></i> <i>" + name +"</i>  "+common_name + "</a>" ;
                             newtick.href = marker.url;
                             newtick.setAttribute('id', "marker"+marker.marker_id);
@@ -426,9 +428,19 @@
                                     var guess = "Unknown";
                                 }
                                 var guess = guess.charAt(0).toUpperCase() + guess.substr(1);
+                                
+                                var iconurl = "<img class='profilepic' src='https://www.inaturalist.org/attachment_defaults/users/icons/defaults/thumb.png'>";
+                                if (data3["results"][i]["user"]["icon"] != null){
+                                    var iconurl = "<img class='profilepic' src='" + data3["results"][i]["user"]["icon"]+"'> " ;
+                                };
+                                
+                                var iconurlobvs = "<img class='profilepic' src='https://www.inaturalist.org/attachment_defaults/users/icons/defaults/thumb.png'>";
+                                if (data3["results"][i]["observation"]["user"]["icon"] != null){
+                                    var iconurlobvs = "<img class='profilepic' src='" + data3["results"][i]["observation"]["user"]["icon"]+"'> " ;
+                                };
 
                                 //add all the info to the popup
-                                marker.bindPopup("<a href='"+'https://www.inaturalist.org/observations/' + data3["results"][i]["observation"]["id"]+"'><img src='" + data3["results"][i]["observation"]["photos"][0]["url"] + "'></a> <br><i>" + guess + "</i><br> Identified by " + data3["results"][i]["user"]["login"], {
+                                marker.bindPopup("<a href='"+'https://www.inaturalist.org/observations/' + data3["results"][i]["observation"]["id"]+"'><img src='" + data3["results"][i]["observation"]["photos"][0]["url"] + "'></a> <br><i>" + guess + "</i><br> Identified by "+ iconurl + data3["results"][i]["user"]["login"] +"<br>Observed by " + iconurlobvs +  " "+ data3["results"][i]["observation"]["user"]["login"],  {
                                     autoClose: true,
                                     autoPan: false
                                 });
@@ -462,11 +474,8 @@
                                 // ticker stuff
                                 var newtick = document.createElement("div");
                                 newtick.classList.add("tick");
-                                var iconurl = "<img class='profilepic' src='https://www.inaturalist.org/attachment_defaults/users/icons/defaults/thumb.png'>";
-                                if (data3["results"][i]["user"]["icon"] != null){
-                                    var iconurl = "<img class='profilepic' src='" + data3["results"][i]["user"]["icon"]+"'> " ;
-                                };
-                                newtick.innerHTML = "<a style='display:block;' href = '" +marker.url+"' target = '_blank'> " + iconurl + data3["results"][i]["user"]["login"] + " identified <i>" + guess +"</i> "+common_name+"  </a>" ;;
+                                
+                                newtick.innerHTML = "<a style='display:block;' href = '" +marker.url+"' target = '_blank'> " + iconurl + data3["results"][i]["user"]["login"] + " identified <i>" + guess +"</i> "+common_name + " observed by " + iconurlobvs+ data3["results"][i]["observation"]["user"]["login"] +"  </a>";
                                 newtick.href = marker.url;
                                 newtick.setAttribute('target', '_blank');
                                 newtick.setAttribute('id', "marker"+marker.marker_id);
